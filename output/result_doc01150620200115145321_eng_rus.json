@@ -1,0 +1,16 @@
+{
+    "pdf_path": "input/doc01150620200115145321.pdf",
+    "pages": [
+        {
+            "page_number": 1,
+            "text": "6 shamko.by\n\nЕРТИФИКАТ\n\nудостоверяет, что\n\nГерасимов Юрий Леонидович\n\nпрошёл тренинг\n\n«В2В ПРОДАЖИ»\n\n1 Masse\n\nбизнес-тренер\nДмитрий Шамко\n\nг. Минск\n04-05.10.2019гГ.",
+            "status": "success"
+        }
+    ],
+    "languages": [
+        "eng",
+        "rus"
+    ],
+    "page_count": 1,
+    "status": "success"
+}
