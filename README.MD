@@ -1,4 +1,4 @@
-# PDF Text Extraction with OCR
+# Извлечение текста из PDF с помощью OCR
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 ## Описание
@@ -15,95 +15,59 @@
 
 ## Установка
 
-### Общие требования (для всех ОС)
-
+### Обязательные компоненты
 - Python 3.7+
-- Tesseract OCR (установить отдельно)
-- Poppler (для конвертации PDF в изображения)
+- Tesseract OCR
+- Poppler (для конвертации PDF)
 
-1. Установите зависимости Python:
+1. Установите зависимости:
 ```bash
 pip install -r requirements.txt
 ```
 
-### Для Windows
+### Windows
+1. **Tesseract**:
+   - Скачайте с [официального сайта](https://github.com/UB-Mannheim/tesseract/wiki)
+   - Установите в `C:\Program Files\Tesseract-OCR`
+   - Добавьте в PATH: `C:\Program Files\Tesseract-OCR`
 
-#### 1. Установка Tesseract OCR
+2. **Poppler**:
+   - Скачайте [здесь](https://github.com/oschwartz10612/poppler-windows/releases/)
+   - Добавьте в PATH папку `bin`
 
-1. Скачайте установщик Tesseract для Windows:  
-   https://github.com/UB-Mannheim/tesseract/wiki
-
-2. Запустите установщик. Рекомендуемые параметры:
-   - Путь установки: `C:\Program Files\Tesseract-OCR`
-   - Обязательно отметьте установку дополнительных языков (включая русский)
-
-3. После установки добавьте путь к Tesseract в системную переменную PATH:
-   - Путь для добавления: `C:\Program Files\Tesseract-OCR`
-
-4. Установите языковые данные для русского (если не установили через установщик):
-   - Скачайте `rus.traineddata` с https://github.com/tesseract-ocr/tessdata
-   - Поместите файл в `C:\Program Files\Tesseract-OCR\tessdata`
-
-#### 2. Установка Poppler (для pdf2image)
-
-1. Скачайте Poppler для Windows:  
-   https://github.com/oschwartz10612/poppler-windows/releases/
-
-2. Распакуйте архив в `C:\poppler`
-
-3. Добавьте путь к bin в системную переменную PATH:
-   - Например: `C:\poppler\poppler-23.11.0\Library\bin`
-
-#### 3. Настройка Python
-
-Добавьте в начало вашего скрипта (или в конфигурацию):
-
-```python
-import pytesseract
-pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
-```
-
-### Для Linux (Ubuntu/Debian)
-
-1. Установите системные зависимости:
-
+### Linux (Ubuntu/Debian)
 ```bash
 sudo apt update
 sudo apt install tesseract-ocr tesseract-ocr-rus poppler-utils
 ```
 
-2. Для дополнительных языков:
+## Как использовать
 
-```bash
-sudo apt install tesseract-ocr-all
-```
-
-## Использование
-
+Запустите и укажите путь к PDF:
 ```bash
 python main.py
 ```
 
-## Структура выходного JSON
+## Формат результатов
 
+Пример вывода:
 ```json
 {
-  "pdf_path": "path/to/document.pdf",
-  "languages": ["eng", "rus"],
-  "page_count": 4,
-  "status": "success",
+  "pdf_path": "doc.pdf",
   "pages": [
     {
       "page_number": 1,
-      "text": "...распознанный текст...",
+      "text": "Распознанный текст...",
       "status": "success"
-    },
-    ...
-  ]
+    }
+  ],
+  "languages": ["rus", "eng"],
+  "status": "success",
+  "page_count": 1
 }
 ```
 
-##  Ошибки и обработка исключений
+## Ошибки и обработка исключений
 
 Классы исключений:
 
@@ -111,9 +75,15 @@ python main.py
 - `UnsupportedLanguageError`: Неподдерживаемый язык
 - `PDFProcessingError`: Ошибка обработки PDF
 
+Система сообщит о проблемах:
+- Неправильный формат PDF
+- Отсутствие нужных языков
+- Проблемы с зависимостями
+- Ошибки доступа к файлам
+
 ## Логирование
 
-Программа ведет лог с уровнем INFO. Пример вывода:
+Пример работы:
 ```log
 2025-05-17 15:25:38,966 - INFO - Конвертация PDF в изображения: input/document.pdf
 2025-05-17 15:25:45,741 - INFO - Обработана страница 1/4
@@ -121,5 +91,4 @@ python main.py
 2025-05-17 15:25:54,058 - INFO - Обработана страница 3/4
 2025-05-17 15:25:56,819 - INFO - Обработана страница 4/4
 2025-05-17 15:25:56,827 - INFO - Результаты сохранены в output/result_document_eng_rus.json
-2025-05-17 15:25:56,827 - INFO - Обработка завершена успешно
 ```
