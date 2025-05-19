@@ -84,11 +84,42 @@ python main.py
 ## Логирование
 
 Пример работы:
-```log
+```bash
 2025-05-17 15:25:38,966 - INFO - Конвертация PDF в изображения: input/document.pdf
 2025-05-17 15:25:45,741 - INFO - Обработана страница 1/4
 2025-05-17 15:25:49,567 - INFO - Обработана страница 2/4
 2025-05-17 15:25:54,058 - INFO - Обработана страница 3/4
 2025-05-17 15:25:56,819 - INFO - Обработана страница 4/4
 2025-05-17 15:25:56,827 - INFO - Результаты сохранены в output/result_document_eng_rus.json
+```
+
+## Тестирование
+
+Запустите тесты:
+```bash
+pytest tests/ -v
+```
+
+Пример работы:
+```bash
+collected 18 items
+
+tests/test_ocr_processor.py::test_init_with_empty_languages PASSED                                                     [  5%]
+tests/test_ocr_processor.py::test_invalid_pdf_path PASSED                                                              [ 11%]
+tests/test_ocr_processor.py::test_init_with_invalid_languages PASSED                                                   [ 16%] 
+tests/test_ocr_processor.py::test_pdf_to_images_success PASSED                                                         [ 22%]
+tests/test_ocr_processor.py::test_pdf_to_images_invalid_path PASSED                                                    [ 27%]
+tests/test_ocr_processor.py::test_extract_text_with_tesseract PASSED                                                   [ 33%]
+tests/test_ocr_processor.py::test_extract_text_with_tesseract_from_custom_image PASSED                                 [ 38%]
+tests/test_ocr_processor.py::test_extract_text_with_tesseract_failure PASSED                                           [ 44%]
+tests/test_ocr_processor.py::test_extract_text_with_tesseract_error PASSED                                             [ 50%]
+tests/test_ocr_processor.py::test_process_pdf_success PASSED                                                           [ 55%]
+tests/test_ocr_processor.py::test_process_pdf_success_with_custom_blank_pdf PASSED                                     [ 61%]
+tests/test_ocr_processor.py::test_process_pdf_failure PASSED                                                           [ 66%]
+tests/test_ocr_processor.py::test_process_pdf_failure_with_custom_corrupted_pdf PASSED                                 [ 72%]
+tests/test_ocr_processor.py::test_process_pdf_empty PASSED                                                             [ 77%]
+tests/test_ocr_processor.py::test_save_to_json PASSED                                                                  [ 83%]
+tests/test_ocr_processor.py::test_save_to_json_invalid_data PASSED                                                     [ 88%]
+tests/test_ocr_processor.py::test_pdf_to_images_poppler_error PASSED                                                   [ 94%]
+tests/test_ocr_processor.py::test_validate_pdf_path_invalid_size PASSED                                                [100%]
 ```

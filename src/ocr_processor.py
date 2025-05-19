@@ -94,10 +94,13 @@ class PDFOCRProcessor:
         
     def _validate_pdf_path(self, pdf_path: Path) -> None:
         """Проверяет валидность PDF файла."""
+        # Базовые проверки
         if not pdf_path.exists():
             raise FileNotFoundError(f"Файл не найден: {pdf_path}")
         if pdf_path.suffix.lower() != ".pdf":
             raise ValueError(f"Файл должен быть PDF: {pdf_path}")
+        
+        # Проверка размера
         if pdf_path.stat().st_size == 0:
             raise ValueError(f"Пустой PDF-файл: {pdf_path}")
         if pdf_path.stat().st_size > self.config.PDF_SIZE_LIMIT:
